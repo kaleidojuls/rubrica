@@ -1,0 +1,18 @@
+{
+    "name": "user/form-with-database",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "User\\DatabaseAbstraction\\": "DatabaseAbstraction/src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Giulia s.",
+            "email": "g.schillaci@live.it"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    }
+}
