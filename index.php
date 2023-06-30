@@ -3,6 +3,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use User\Form\Form;
 
+$form = new Form($_SERVER["REQUEST_METHOD"]);
+
 ?>
 
 <!DOCTYPE html>
@@ -14,6 +16,8 @@ use User\Form\Form;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Aggiungi Contatto a Rubrica</title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="form.css">
 
@@ -28,10 +32,9 @@ use User\Form\Form;
 </head>
 
 <body>
-    <?php $form = new Form($_SERVER["REQUEST_METHOD"]); ?>
-
     <div class="container-fluid">
         <div class="row p-4 justify-content-center">
+
             <div class="col col-lg-7 form-container">
                 <form enctype="multipart/form-data" method="POST" action="<?php echo $_SERVER["PHP_SELF"] ?>">
 
@@ -132,20 +135,20 @@ use User\Form\Form;
             </div>
         </div>
     </div>
-</body>
-<script>
-(function changeProfileImage(imageUrl) {
-    if (imageUrl) {
-        const cssImgUrl = `url(${imageUrl})`;
-        $(".profile-pic").css("background-image", cssImgUrl);
-    }
-})("<?php echo $form->get_input_value('immagineContatto'); ?>");
-</script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
-</script>
+    <script>
+    (function changeProfileImage(imageUrl) {
+        if (imageUrl) {
+            const cssImgUrl = `url(${imageUrl})`;
+            $(".profile-pic").css("background-image", cssImgUrl);
+        }
+    })("<?php echo $form->get_input_value('immagineContatto'); ?>");
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    </script>
+
+</body>
 
 </html>
