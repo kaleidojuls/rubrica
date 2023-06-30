@@ -1,3 +1,10 @@
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use User\Form\Form;
+
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 
@@ -12,11 +19,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
-    <?php require "src/Form.php" ?>
-
     <script type="module">
-    import CustomValidation from ".7src/validation/CustomFormValidation.js";
-
+    import CustomValidation from "./src/validation/CustomFormValidation.js";
     const formValidation = new CustomValidation();
     formValidation.validationOnChange();
     </script>

@@ -3,7 +3,8 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "User\\DatabaseAbstraction\\": "DatabaseAbstraction/src/"
+            "User\\DatabaseAbstraction\\": "DatabaseAbstraction/src/",
+            "User\\Form\\": "src/"
         }
     },
     "authors": [

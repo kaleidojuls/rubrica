@@ -1,4 +1,7 @@
 <?php
+
+namespace User\Form;
+
 class Form
 {
     private string $formMethod;
