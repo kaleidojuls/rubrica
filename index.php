@@ -1,9 +1,15 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
+use User\DatabaseAbstraction\DatabaseFactory;
+use User\DatabaseAbstraction\DatabaseContract;
 use User\Form\Form;
 
+// $database = DatabaseFactory::Create(DatabaseContract::TYPE_PDO);
+
 $form = new Form($_SERVER["REQUEST_METHOD"]);
+
+$form->save_datas();
 
 ?>
 
@@ -41,14 +47,14 @@ $form = new Form($_SERVER["REQUEST_METHOD"]);
                     <div class="row m-2">
                         <div class="col d-flex justify-content-center">
                             <div class="profile-pic">
-                                <label for="immagineContatto" class="custom-input-button">
+                                <label for="immagine_contatto" class="custom-input-button">
                                     <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-                                    <input type="file" class="form-control" id="immagineContatto"
-                                        name="immagineContatto">
+                                    <input type="file" class="form-control" id="immagine_contatto"
+                                        name="immagine_contatto">
                                 </label>
                             </div>
                         </div>
-                        <div id="immagineContatto-invalid-feedback"></div>
+                        <div id="immagine_contatto-invalid-feedback"></div>
                     </div>
 
                     <div class="row m-3">

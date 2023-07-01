@@ -45,7 +45,7 @@ export default class CustomValidation extends DefaultValidation {
 
     customInputValidation(inputId) {
         switch (inputId) {
-            case "immagineContatto":
+            case "immagine_contatto":
                 const imgFakePath = document.getElementById(inputId).value.split("\\");
 
                 const imgValidation = {
