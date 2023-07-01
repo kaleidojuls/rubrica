@@ -1,15 +1,11 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '\vendor\autoload.php';
 
-use User\DatabaseAbstraction\DatabaseFactory;
-use User\DatabaseAbstraction\DatabaseContract;
 use User\Form\Form;
-
-// $database = DatabaseFactory::Create(DatabaseContract::TYPE_PDO);
 
 $form = new Form($_SERVER["REQUEST_METHOD"]);
 
-$form->save_datas();
+$form->save_datas_on_post();
 
 ?>
 
@@ -143,12 +139,14 @@ $form->save_datas();
     </div>
 
     <script>
-    (function changeProfileImage(imageUrl) {
+    function changeProfileImage() {
+        const imageUrl = "<?php echo $form->get_input_value('immagine_contatto'); ?>";
+
         if (imageUrl) {
             const cssImgUrl = `url(${imageUrl})`;
             $(".profile-pic").css("background-image", cssImgUrl);
         }
-    })("<?php echo $form->get_input_value('immagineContatto'); ?>");
+    };
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
