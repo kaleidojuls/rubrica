@@ -38,7 +38,8 @@ $form->save_datas_on_post();
         <div class="row p-4 justify-content-center">
 
             <div class="col col-lg-7 form-container">
-                <form enctype="multipart/form-data" method="POST" action="<?php echo $_SERVER["PHP_SELF"] ?>">
+
+                <form enctype="multipart/form-data" method="POST" action="<?php $_SERVER["PHP_SELF"] ?>">
 
                     <div class="row m-2">
                         <div class="col d-flex justify-content-center">
