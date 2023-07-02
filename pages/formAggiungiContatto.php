@@ -5,10 +5,9 @@ use User\Form\Form;
 
 $form = new Form($_SERVER["REQUEST_METHOD"]);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $form->save_datas_on_post();
+$form->save_datas_on_post();
 
-    var_dump($form->save_datas_on_post());
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     header("Location: ../index.php");
 }
