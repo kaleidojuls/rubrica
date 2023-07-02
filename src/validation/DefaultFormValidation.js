@@ -1,17 +1,14 @@
 export default class DefaultValidation {
-    allInputsIds = [];
-    inputsIdsToValidate;
+    inputsConfig;
 
-    constructor(inputsIdsToValidate) {
-        if (!inputsIdsToValidate) {
-            const allInputs = $("input").not("[type='hidden']");
+    constructor(inputsConfig) {
+        this.inputsConfig = inputsConfig;
 
-            for (let i = 0; i < allInputs.length; i++) {
-                const inputId = allInputs[i].id;
-                this.allInputsIds.push(inputId);
+        for (const input in inputsConfig) {
+            if (!inputsConfig[input].customValidation) {
+                inputsConfig[input].validationOnChange(this.defaultInputValidation);
             }
-        }
-        this.inputsIdsToValidate = inputsIdsToValidate || this.allInputsIds;
+        };
     }
 
     invalidateInput(inputId) {

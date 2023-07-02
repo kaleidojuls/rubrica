@@ -1,91 +1,118 @@
+import Input from "./Input.js";
+import InputValidation from "./validation/InputValidation.js";
+
 const inputsConfig = {
-    configImmagineContatto: {
-        type: "file",
-        nameId: "immagine_contatto",
-        placeholder: false,
-        value: false,
-        required: false,
-        hasFeedbackBox: false,
-        hasIcon: false,
-        iconName: ""
-    },
+    configImmagineContatto: new Input(
+        "file",
+        "immagine_contatto",
+        false,
+        false,
+        false,
+        false,
+        false,
+        "",
+        new InputValidation(isImgValid, "Il file deve essere un'immagine jpeg/jpg o png", "immagine aggiunta!")
+    ),
 
-    configNome: {
-        type: "text",
-        nameId: "nome",
-        placeholder: "*Nome",
-        value: false,
-        required: true,
-        hasFeedbackBox: true,
-        hasIcon: true,
-        iconName: "bi-person-fill"
-    },
+    configNome: new Input(
+        "text",
+        "nome",
+        "*Nome",
+        false,
+        true,
+        true,
+        true,
+        "bi-person-fill",
+        new InputValidation(isStringValid, "Il campo deve avere tra i 2 e i 20 caratteri e non deve contenere numeri o caratteri speciali")
+    ),
 
-    configCognome: {
-        type: "text",
-        nameId: "cognome",
-        placeholder: "Cognome",
-        value: false,
-        required: false,
-        hasFeedbackBox: true,
-        hasIcon: false,
-        iconName: ""
-    },
+    configCognome: new Input(
+        "text",
+        "cognome",
+        "Cognome",
+        false,
+        false,
+        true,
+        false,
+        "",
+        new InputValidation(isStringValid, "Il campo deve avere tra i 2 e i 20 caratteri e non deve contenere numeri o caratteri speciali")
+    ),
 
-    configSocieta: {
-        type: "text",
-        nameId: "societa",
-        placeholder: "Società",
-        value: false,
-        required: false,
-        hasFeedbackBox: true,
-        hasIcon: true,
-        iconName: "bi-briefcase-fill"
-    },
+    configSocieta: new Input(
+        "text",
+        "societa",
+        "Società",
+        false,
+        false,
+        true,
+        true,
+        "bi-briefcase-fill",
+        false
+    ),
 
-    configQualifica: {
-        type: "text",
-        nameId: "qualifica",
-        placeholder: "Qualifica",
-        value: false,
-        required: false,
-        hasFeedbackBox: true,
-        hasIcon: false,
-        iconName: ""
-    },
+    configQualifica: new Input(
+        "text",
+        "qualifica",
+        "Qualifica",
+        false,
+        false,
+        true,
+        false,
+        "",
+        false
+    ),
 
-    configEmail: {
-        type: "email",
-        nameId: "email",
-        placeholder: "*Example.mail@email.com",
-        value: false,
-        required: true,
-        hasFeedbackBox: true,
-        hasIcon: true,
-        iconName: "bi-envelope-fill"
-    },
+    configEmail: new Input(
+        "email",
+        "email",
+        "*Example.mail@email.com",
+        false,
+        true,
+        true,
+        true,
+        "bi-envelope-fill",
+        false
+    ),
 
-    configNumero: {
-        type: "tel",
-        nameId: "numero",
-        placeholder: "*Numero di telefono",
-        value: false,
-        required: true,
-        hasFeedbackBox: true,
-        hasIcon: true,
-        iconName: "bi-telephone-fill"
-    },
+    configNumero: new Input(
+        "tel",
+        "numero",
+        "*Numero di telefono",
+        false,
+        true,
+        true,
+        true,
+        "bi-telephone-fill",
+        new InputValidation(isNumberValid, "Il numero deve avere un formato consentito")
+    ),
 
-    configCompleanno: {
-        type: "date",
-        nameId: "compleanno",
-        placeholder: false,
-        value: false,
-        required: false,
-        hasFeedbackBox: true,
-        hasIcon: true,
-        iconName: "bi-gift-fill"
-    }
+    configCompleanno: new Input(
+        "date",
+        "compleanno",
+        false,
+        false,
+        false,
+        true,
+        true,
+        "bi-gift-fill",
+        null
+    ),
+};
+
+function isImgValid(inputValue) {
+    const validRegExp = new RegExp(/\.(jpg|jpeg|png)$/);
+    return validRegExp.test(inputValue);
+};
+
+function isStringValid(inputValue) {
+    const simpleValue = inputValue.toLowerCase().trim().split(" ").join("");
+    const validRegExp = new RegExp(/^[a-z]{2,20}$/);
+    return validRegExp.test(simpleValue);
+};
+
+function isNumberValid(inputValue) {
+    const validRegExp = new RegExp(/^((00|\+)39[\. ]?)?3\d{2}[\. ]?\d{6,7}$/);
+    return validRegExp.test(inputValue);
 };
 
 export default inputsConfig;

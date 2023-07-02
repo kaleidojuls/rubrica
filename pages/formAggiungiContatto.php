@@ -7,6 +7,9 @@ $form = new Form($_SERVER["REQUEST_METHOD"]);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $form->save_datas_on_post();
+
+    var_dump($form->save_datas_on_post());
+
     header("Location: ../index.php");
 }
 
@@ -30,16 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script type="module">
     import inputsConfig from "../src/inputsConfig.js";
-    import Input from "../src/Input.js";
-    import CustomValidation from "../src/validation/CustomFormValidation.js";
 
-    for (const config in inputsConfig) {
-        const inputObject = new Input(inputsConfig[config]);
-        inputObject.printInput();
+    for (const input in inputsConfig) {
+        inputsConfig[input].printInput();
     };
-
-    const formValidation = new CustomValidation();
-    formValidation.validationOnChange();
     </script>
 
 </head>

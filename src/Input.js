@@ -5,12 +5,12 @@ export default class Input {
     placeholder;
     value;
     required;
-    customValidation = null;
     hasFeedbackBox;
     hasIcon;
     iconName;
+    customValidation;
 
-    constructor({ type = "text", nameId = "", placeholder = false, value = false, required = false, hasFeedbackBox = false, hasIcon = false, iconName = "" }) {
+    constructor(type = "text", nameId = "", placeholder = false, value = false, required = false, hasFeedbackBox = false, hasIcon = false, iconName = "", customValidation = false) {
         this.type = type;
         this.nameId = nameId;
         this.placeholder = placeholder;
@@ -19,15 +19,15 @@ export default class Input {
         this.hasFeedbackBox = hasFeedbackBox;
         this.hasIcon = hasIcon;
         this.iconName = iconName;
-    }
-
-    addCustomValidation(inputValidation) {
-        this.customValidation = inputValidation;
-        this.validationOnChange(inputValidation.validityFunction);
+        this.customValidation = customValidation;
     }
 
     validationOnChange($validationFunction) {
-        $(`#${this.nameId}`).change(() => $validationFunction(this.nameId, this.customValidation));
+        if (this.customValidation) {
+            $(`#${this.nameId}`).change(() => $validationFunction(this.nameId, this.customValidation));
+        } else {
+            $(`#${this.nameId}`).change(() => $validationFunction(this.nameId));
+        }
     }
 
     printInput() {
