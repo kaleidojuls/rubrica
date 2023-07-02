@@ -15,7 +15,7 @@ class Form
         $this->formMethod = $formMethod;
     }
 
-    public function get_input_value(string $inputName): string|null
+    private function get_input_value(string $inputName): string|null
     {
         $dataArray = $this->formMethod === "POST" ? $_POST : $_GET;
 
