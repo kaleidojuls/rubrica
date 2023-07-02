@@ -33,10 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script type="module">
     import inputsConfig from "../src/inputsConfig.js";
+    import CustomFormValidation from "../src/validation/CustomFormValidation.js"
 
     for (const input in inputsConfig) {
         inputsConfig[input].printInput();
     };
+
+    const customValidation = new CustomFormValidation(inputsConfig);
+    customValidation.activateCustom();
     </script>
 
 </head>

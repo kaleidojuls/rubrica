@@ -3,11 +3,12 @@ export default class DefaultValidation {
 
     constructor(inputsConfig) {
         this.inputsConfig = inputsConfig;
+    }
 
-        for (const input in inputsConfig) {
-            if (!inputsConfig[input].customValidation) {
-                inputsConfig[input].validationOnChange(this.defaultInputValidation);
-            }
+    activate() {
+        for (const input in this.inputsConfig) {
+            const inputId = this.inputsConfig[input].nameId;
+            $(`#${inputId}`).change(() => this.defaultInputValidation(inputId));
         };
     }
 

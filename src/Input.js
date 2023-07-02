@@ -22,14 +22,6 @@ export default class Input {
         this.customValidation = customValidation;
     }
 
-    validationOnChange($validationFunction) {
-        if (this.customValidation) {
-            $(`#${this.nameId}`).change(() => $validationFunction(this.nameId, this.customValidation));
-        } else {
-            $(`#${this.nameId}`).change(() => $validationFunction(this.nameId));
-        }
-    }
-
     printInput() {
         const hasIcon = this.hasIcon ?
             `<span class="input-group-text">
