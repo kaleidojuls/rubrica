@@ -21,12 +21,17 @@ require_once __DIR__ . '/common.php';
 
     <div class="container-fluid bg-light wrapper">
 
-        <ul class="list-group w-m-5">
-            <?php $result = $database->getData("SELECT * FROM contacts ORDER BY nome LIMIT 6"); ?>
+        <ul class="list-group">
+            <?php $result = $database->getData("SELECT * FROM contacts ORDER BY nome LIMIT 4"); ?>
             <?php while ($contact = $result->fetch()): ?>
 
-            <li class="list-group-item d-flex justify-content-between pl-3 pr-3">
-                <div class="col-11">
+            <li class="list-group-item row d-flex justify-content-between pl-3 pr-3">
+
+                <div class="col-2 d-flex align-items-center justify-content-center me-3">
+                    <i class="bi bi-person-circle" style="color: lightgrey; font-size: 4rem;"></i>
+                </div>
+
+                <div class="col-8 d-flex flex-column justify-content-center">
                     <div class="fw-bold">
                         <?= $contact["nome"] ?>
                         <?= $contact["cognome"] ?>
@@ -34,21 +39,28 @@ require_once __DIR__ . '/common.php';
                             <i class="bi bi-info-circle-fill"></i>
                         </a>
                     </div>
-                    <i class="bi bi-telephone-fill"></i>
-                    <?= $contact["numero"] ?> -
-                    <i class="bi bi-envelope-fill"></i>
-                    <?= $contact["email"] ?>
+                    <div>
+                        <div class="d-inline-block me-3">
+                            <i class="bi bi-telephone-fill"></i>
+                            <?= $contact["numero"] ?>
+                        </div>
+                        <div class="d-inline-block">
+                            <i class="bi bi-envelope-fill"></i>
+                            <?= $contact["email"] ?>
+                        </div>
+                    </div>
                 </div>
-                <div class="col">
+
+                <div class="col-1 d-flex flex-column justify-content-center align-items-end">
                     <a href="./pages/formEditContact.php?id=<?= $contact['id'] ?>">
-                        <span class="badge bg-primary rounded-pill m-1 d-block">
+                        <button class="action-icon btn btn-primary m-1">
                             <i class="bi bi-pencil" style="color:white;"></i>
-                        </span>
+                        </button>
                     </a>
                     <a href="./pages/deleteContact.php?id=<?= $contact['id'] ?>">
-                        <span class="badge bg-danger rounded-pill m-1 d-block">
+                        <button class="action-icon btn btn-danger m-1">
                             <i class="bi bi-trash" style="color:white;"></i>
-                        </span>
+                        </button>
                     </a>
                 </div>
             </li>

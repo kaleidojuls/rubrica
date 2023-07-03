@@ -16,3 +16,14 @@ i {
     align-items: center;
     height: 100%;
 }
+
+.list-wrapper {
+    width: 90%;
+}
+
+.action-icon {
+    width: 35px;
+    height: 30px;
+    border-radius: 25px;
+    padding: 0;
+}
