@@ -15,8 +15,8 @@ if (!$selectedContact) {
 $form = new Form();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $form->saveContactInfo("EDIT", Helper::AccessToValue($selectedContact, "id"));
-    header("Location: ../index.php");
+    $form->saveContactInfo("EDIT", $id);
+    header("Location: formInfoContact.php?id=$id");
 }
 
 ?>
@@ -67,6 +67,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="col col-lg-7 form-container bg-white">
                 <form enctype="multipart/form-data" method="POST" action="<?php $_SERVER["PHP_SELF"] ?>">
+
+                    <a href="../index.php">
+                        <i class="back-icon bi bi-arrow-left ms-3" style="font-size: 2rem; color: lightgray;"></i>
+                    </a>
 
                     <div class="row m-2">
                         <div class="col d-flex justify-content-center">
