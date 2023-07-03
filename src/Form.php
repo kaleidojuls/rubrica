@@ -8,41 +8,28 @@ use User\Form\FormHelper;
 
 class Form
 {
-    private string $formMethod;
-
-    function __construct(string $formMethod = "POST")
-    {
-        $this->formMethod = $formMethod;
-    }
-
-    public function saveContactInfo(): void
+    public function saveContactInfo(string $dbAction, int $contactId = null): void
     {
         $database = DatabaseFactory::Create(DatabaseContract::TYPE_PDO);
 
-        if ($_SERVER["REQUEST_METHOD"] == $this->formMethod) {
+        $compiledInputs = $this->getCompiledInputs();
+        $query = "";
 
-            $compiledInputs = $this->getCompiledInputs();
+        if ($dbAction == "ADD") {
+            $query = $this->getInsertQuery($compiledInputs);
 
-            $fields_names = implode(", ", array_keys($compiledInputs));
-            $values_placeholder = "";
-
-            for ($i = 0; $i < count($compiledInputs); $i++) {
-                if ($i == count($compiledInputs) - 1) {
-                    $values_placeholder .= " ?";
-                } else {
-                    $values_placeholder .= " ?,";
-                }
-            }
-
-            $query = "INSERT INTO contacts ($fields_names) VALUES ($values_placeholder)";
-
-            $database->setData($query, [array_values($compiledInputs)]);
+        } else if ($dbAction == "EDIT") {
+            $query = $this->getEditQuery($compiledInputs, $contactId);
         }
+
+        $database->setData($query, [array_values($compiledInputs)]);
+
     }
 
     private function getCompiledInputs(): array
     {
         $allInputs = array_merge(
+
             array_diff($_POST, ["MAX_FILE_SIZE" => $_POST["MAX_FILE_SIZE"]]),
             ["immagine_contatto" => $this->getInputValue("immagine_contatto")]
         );
@@ -52,12 +39,46 @@ class Form
 
     private function getInputValue(string $inputName): string|null
     {
-        $dataArray = $this->formMethod == "POST" ? $_POST : $_GET;
-
         if ($inputName === "immagine_contatto") {
             return FormHelper::getEncodedImage($inputName);
         }
 
-        return array_key_exists($inputName, $dataArray) ? $dataArray[$inputName] : null;
+        return array_key_exists($inputName, $_POST) ? $_POST[$inputName] : null;
+    }
+
+    private function getInsertQuery(array $compiledInputs): string
+    {
+        $stringInputsNames = implode(", ", array_keys($compiledInputs));
+        $valuesPlaceholder = "";
+
+        for ($i = 0; $i < count($compiledInputs); $i++) {
+            if ($i == count($compiledInputs) - 1) {
+                $valuesPlaceholder .= " ?";
+            } else {
+                $valuesPlaceholder .= " ?,";
+            }
+        }
+
+        $query = "INSERT INTO contacts ($stringInputsNames) VALUES ($valuesPlaceholder)";
+        return $query;
+    }
+
+    private function getEditQuery(array $compiledInputs, int $contactId): string
+    {
+        $inputsNames = array_keys($compiledInputs);
+        $attributesPlaceholder = "";
+
+        for ($i = 0; $i < count($inputsNames); $i++) {
+            if ($i == count($inputsNames) - 1) {
+                $attributesPlaceholder .= $inputsNames[$i] . " = ?";
+            } else {
+                $attributesPlaceholder .= $inputsNames[$i] . " = ?,";
+            }
+        }
+
+        $query = "UPDATE contacts SET $attributesPlaceholder 
+            WHERE id = $contactId;";
+
+        return $query;
     }
 }

@@ -1,12 +1,22 @@
 <?php
-require_once $_SERVER["DOCUMENT_ROOT"] . '\vendor\autoload.php';
+
+require_once $_SERVER["DOCUMENT_ROOT"] . '\common.php';
 
 use User\Form\Form;
+use User\DatabaseAbstraction\Helper;
+
+$id = $_GET['id'];
+$result = $database->getData("SELECT * FROM contacts where id = ?", [$id]);
+$selectedContact = $result->fetch();
+
+if (!$selectedContact) {
+    die("Contact not found");
+}
 
 $form = new Form();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $form->saveContactInfo("ADD");
+    $form->saveContactInfo("EDIT", Helper::AccessToValue($selectedContact, "id"));
     header("Location: ../index.php");
 }
 
@@ -31,6 +41,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script type="module">
     import inputsConfig from "../src/inputsConfig.js";
     import CustomFormValidation from "../src/validation/CustomFormValidation.js"
+
+    inputsConfig.configImmagineContatto.value = "<?= Helper::AccessToValue($selectedContact, "immagine_contatto") ?>";
+    inputsConfig.configNome.value = "<?= Helper::AccessToValue($selectedContact, "nome") ?>";
+    inputsConfig.configCognome.value = "<?= Helper::AccessToValue($selectedContact, "cognome") ?>";
+    inputsConfig.configSocieta.value = "<?= Helper::AccessToValue($selectedContact, "societa") ?>";
+    inputsConfig.configQualifica.value = "<?= Helper::AccessToValue($selectedContact, "qualifica") ?>";
+    inputsConfig.configEmail.value = "<?= Helper::AccessToValue($selectedContact, "email") ?>";
+    inputsConfig.configNumero.value = "<?= Helper::AccessToValue($selectedContact, "numero") ?>";
+    inputsConfig.configCompleanno.value = "<?= Helper::AccessToValue($selectedContact, "compleanno") ?>";
 
     for (const input in inputsConfig) {
         inputsConfig[input].printInput();
@@ -85,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="row m-3">
                         <div class="col d-flex justify-content-center">
                             <button class="btn btn-primary mt-2" type="submit">
-                                <i class="bi bi-person-check-fill" style="color:white;"></i> Salva Nuovo Contatto
+                                <i class="bi bi-person-check-fill" style="color:white;"></i> Salva Contatto
                             </button>
                         </div>
                     </div>
