@@ -1,5 +1,4 @@
 <?php
-
 require_once $_SERVER["DOCUMENT_ROOT"] . '\common.php';
 
 use User\DatabaseAbstraction\Helper;
@@ -21,7 +20,7 @@ if (!$selectedContact) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Aggiungi Contatto a Rubrica</title>
+    <title>Info Contatto</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -70,25 +69,7 @@ if (!$selectedContact) {
                         <div id="immagine_contatto-invalid-feedback"></div>
                     </div>
 
-                    <div class="row m-3">
-                        <div class="col" id="col-nome"></div>
-                        <div class="col-12 col-md" id="col-cognome"></div>
-                    </div>
-
-                    <div class="row m-3">
-                        <div class="col" id="col-societa"></div>
-                        <div class="col-12 col-md" id="col-qualifica"></div>
-                    </div>
-
-                    <div class="row m-3">
-                        <div class="col" id="col-email"></div>
-                        <div class="col-12 col-md" id="col-numero"></div>
-                    </div>
-
-                    <div class="row m-3">
-                        <label for="compleanno">Data di Nascita:</label>
-                        <div class="col" id="col-compleanno"></div>
-                    </div>
+                    <?php echo printCommonFormLayout(); ?>
 
                     <div class="row m-3">
                         <div class="col d-flex justify-content-center">
