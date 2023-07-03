@@ -1,6 +1,6 @@
 export default class InputValidation {
 
-    validityFunction; //deve accettare nameId e customValidation (oggetto di input specifico);
+    validityFunction;
     invalidMessage;
     validMessage;
 

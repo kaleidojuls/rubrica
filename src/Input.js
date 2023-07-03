@@ -2,31 +2,25 @@ export default class Input {
 
     type;
     nameId;
-    placeholder;
-    value;
-    required;
-    hasFeedbackBox;
-    hasIcon;
-    iconName;
-    customValidation;
+    placeholder = false;
+    value = false;
+    required = false;
+    hasFeedbackBox = false;
+    icon = false;
+    customValidation = false;
 
-    constructor(type = "text", nameId = "", placeholder = false, value = false, required = false, hasFeedbackBox = false, hasIcon = false, iconName = "", customValidation = false) {
+    constructor({ type, nameId, placeholder, value, required, hasFeedbackBox, icon, customValidation }) {
         this.type = type;
         this.nameId = nameId;
         this.placeholder = placeholder;
         this.value = value;
         this.required = required;
         this.hasFeedbackBox = hasFeedbackBox;
-        this.hasIcon = hasIcon;
-        this.iconName = iconName;
+        this.icon = icon;
         this.customValidation = customValidation;
     }
 
     printInput() {
-        const hasIcon = this.hasIcon ?
-            `<span class="input-group-text">
-            <i class="bi ${this.iconName}"></i>
-            </span>` : "";
         const hasPlaceholder = this.placeholder ? ` placeholder="${this.placeholder}"` : "";
         const hasValue = this.value ? ` value="${this.value}"` : "";
         const hasFeedbackBox = this.hasFeedbackBox ?
@@ -34,8 +28,7 @@ export default class Input {
             "";
         const isRequired = this.required ? ` required"` : "";
 
-        let inputHTML = `${hasIcon}` +
-            `<input` +
+        let inputHTML = `<input` +
             ` type="${this.type}"` +
             ` id="${this.nameId}"` +
             ` name="${this.nameId}"` +
@@ -45,8 +38,13 @@ export default class Input {
             `${isRequired}>` +
             `${hasFeedbackBox}`;
 
-        if (this.hasIcon) {
-            inputHTML = `<div class="input-group has-validation"> ${inputHTML} </div>`;
+        if (this.icon) {
+            inputHTML = `<div class="input-group has-validation">
+            <span class="input-group-text">
+            <i class="bi ${this.icon}"></i>
+            </span> 
+            ${inputHTML} 
+            </div>`;
         };
 
         $(`#col-${this.nameId}`).html(inputHTML);

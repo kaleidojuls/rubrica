@@ -4,37 +4,26 @@ namespace User\Form;
 
 use User\DatabaseAbstraction\DatabaseFactory;
 use User\DatabaseAbstraction\DatabaseContract;
-
+use User\Form\FormHelper;
 
 class Form
 {
     private string $formMethod;
 
-    function __construct(string $formMethod)
+    function __construct(string $formMethod = "POST")
     {
         $this->formMethod = $formMethod;
     }
 
-    private function get_input_value(string $inputName): string|null
-    {
-        $dataArray = $this->formMethod === "POST" ? $_POST : $_GET;
-
-        if ($inputName === "immagine_contatto")
-            return $this->get_profile_image_usable($inputName);
-
-        return array_key_exists($inputName, $dataArray) ? $dataArray[$inputName] : null;
-    }
-
-    public function save_datas_on_post(): void
+    public function saveContactInfo(): void
     {
         $database = DatabaseFactory::Create(DatabaseContract::TYPE_PDO);
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_SERVER["REQUEST_METHOD"] == $this->formMethod) {
 
-            $compiledInputs = $this->get_compiled_inputs();
+            $compiledInputs = $this->getCompiledInputs();
 
             $fields_names = implode(", ", array_keys($compiledInputs));
-            $fields_values = array_values($compiledInputs);
             $values_placeholder = "";
 
             for ($i = 0; $i < count($compiledInputs); $i++) {
@@ -47,38 +36,28 @@ class Form
 
             $query = "INSERT INTO contacts ($fields_names) VALUES ($values_placeholder)";
 
-            $database->setData($query, [$fields_values]);
+            $database->setData($query, [array_values($compiledInputs)]);
         }
     }
 
-    private function get_compiled_inputs(): array
+    private function getCompiledInputs(): array
     {
-
         $allInputs = array_merge(
             array_diff($_POST, ["MAX_FILE_SIZE" => $_POST["MAX_FILE_SIZE"]]),
-            ["immagine_contatto" => $this->get_input_value("immagine_contatto")]
+            ["immagine_contatto" => $this->getInputValue("immagine_contatto")]
         );
 
         return array_filter($allInputs);
     }
 
-    private function get_profile_image_usable(string $fileInputName): string|null
+    private function getInputValue(string $inputName): string|null
     {
-        if (array_key_exists($fileInputName, $_FILES)) {
-            $fileName = $_FILES[$fileInputName]["tmp_name"];
-            $fileType = $_FILES[$fileInputName]["type"];
-            $fileIsImage = str_contains($fileType, "image");
+        $dataArray = $this->formMethod == "POST" ? $_POST : $_GET;
 
-            return $fileIsImage ? $this->base64_encode_image($fileName, $fileType) : null;
+        if ($inputName === "immagine_contatto") {
+            return FormHelper::getEncodedImage($inputName);
         }
 
-        return null;
-    }
-
-    private function base64_encode_image(string $fileName, string $fileType): string
-    {
-        $imgBinary = fread(fopen($fileName, "r"), filesize($fileName));
-
-        return 'data:image/' . $fileType . ';base64,' . base64_encode($imgBinary);
+        return array_key_exists($inputName, $dataArray) ? $dataArray[$inputName] : null;
     }
 }
