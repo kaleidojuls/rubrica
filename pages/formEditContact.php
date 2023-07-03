@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="row m-3">
                         <div class="col d-flex justify-content-center">
-                            <button class="btn btn-primary mt-2" type="submit">
+                            <button class="btn btn-success mt-2" type="submit">
                                 <i class="bi bi-person-check-fill" style="color:white;"></i> Salva Contatto
                             </button>
                         </div>

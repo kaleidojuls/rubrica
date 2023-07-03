@@ -5,16 +5,18 @@ export default class Input {
     placeholder = false;
     value = false;
     required = false;
+    disabled = false;
     hasFeedbackBox = false;
     icon = false;
     customValidation = false;
 
-    constructor({ type, nameId, placeholder, value, required, hasFeedbackBox, icon, customValidation }) {
+    constructor({ type, nameId, placeholder, value, required, disabled, hasFeedbackBox, icon, customValidation }) {
         this.type = type;
         this.nameId = nameId;
         this.placeholder = placeholder;
         this.value = value;
         this.required = required;
+        this.disabled = disabled;
         this.hasFeedbackBox = hasFeedbackBox;
         this.icon = icon;
         this.customValidation = customValidation;
@@ -26,7 +28,8 @@ export default class Input {
         const hasFeedbackBox = this.hasFeedbackBox ?
             `<div class="invalid-feedback" id="${this.nameId}-invalid-feedback"></div>` :
             "";
-        const isRequired = this.required ? ` required"` : "";
+        const isRequired = this.required && !this.disabled ? ` required` : "";
+        const isDisabled = this.disabled ? ` disabled` : "";
 
         let inputHTML = `<input` +
             ` type="${this.type}"` +
@@ -35,7 +38,9 @@ export default class Input {
             ` class="form-control"` +
             `${hasPlaceholder}` +
             `${hasValue}` +
-            `${isRequired}>` +
+            `${isRequired}` +
+            `${isDisabled}` +
+            `>` +
             `${hasFeedbackBox}`;
 
         if (this.icon) {

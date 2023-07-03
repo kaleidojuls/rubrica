@@ -30,7 +30,9 @@ require_once __DIR__ . '/common.php';
                     <div class="fw-bold">
                         <?= $contact["nome"] ?>
                         <?= $contact["cognome"] ?>
-                        <i class="bi bi-three-dots"></i>
+                        <a href="./pages/formInfoContact.php?id=<?= $contact['id'] ?>">
+                            <i class="bi bi-info-circle-fill"></i>
+                        </a>
                     </div>
                     <i class="bi bi-telephone-fill"></i>
                     <?= $contact["numero"] ?> -
@@ -56,7 +58,7 @@ require_once __DIR__ . '/common.php';
         <div class="row m-2">
             <div class="col d-flex justify-content-center">
                 <a href="./pages/formAddContact.php">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-success">
                         <i class="bi bi-person-fill-add" style="color:white;"></i> aggiungi contatto
                     </button>
                 </a>

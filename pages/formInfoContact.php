@@ -1,13 +1,15 @@
 <?php
-require_once $_SERVER["DOCUMENT_ROOT"] . '\vendor\autoload.php';
 
-use User\Form\Form;
+require_once $_SERVER["DOCUMENT_ROOT"] . '\common.php';
 
-$form = new Form();
+use User\DatabaseAbstraction\Helper;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $form->saveContactInfo("ADD");
-    header("Location: ../index.php");
+$id = $_GET['id'];
+$result = $database->getData("SELECT * FROM contacts where id = ?", [$id]);
+$selectedContact = $result->fetch();
+
+if (!$selectedContact) {
+    die("Contact not found");
 }
 
 ?>
@@ -32,12 +34,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     import inputsConfig from "../src/inputsConfig.js";
     import CustomFormValidation from "../src/validation/CustomFormValidation.js"
 
+    inputsConfig.configImmagineContatto.value = "<?= Helper::AccessToValue($selectedContact, "immagine_contatto") ?>";
+    inputsConfig.configNome.value = "<?= Helper::AccessToValue($selectedContact, "nome") ?>";
+    inputsConfig.configCognome.value = "<?= Helper::AccessToValue($selectedContact, "cognome") ?>";
+    inputsConfig.configSocieta.value = "<?= Helper::AccessToValue($selectedContact, "societa") ?>";
+    inputsConfig.configQualifica.value = "<?= Helper::AccessToValue($selectedContact, "qualifica") ?>";
+    inputsConfig.configEmail.value = "<?= Helper::AccessToValue($selectedContact, "email") ?>";
+    inputsConfig.configNumero.value = "<?= Helper::AccessToValue($selectedContact, "numero") ?>";
+    inputsConfig.configCompleanno.value = "<?= Helper::AccessToValue($selectedContact, "compleanno") ?>";
+
     for (const input in inputsConfig) {
+        if (input !== "configImmagineContatto") {
+            inputsConfig[input].disabled = true;
+        }
         inputsConfig[input].printInput();
     };
-
-    const customValidation = new CustomFormValidation(inputsConfig);
-    customValidation.activateCustom();
     </script>
 
 </head>
@@ -53,10 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="row m-2">
                         <div class="col d-flex justify-content-center">
                             <div class="profile-pic">
-                                <label for="immagine_contatto" class="custom-input-button">
-                                    <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-                                    <div id="col-immagine_contatto"></div>
-                                </label>
+                                <div id="col-immagine_contatto"></div>
                             </div>
                         </div>
                         <div id="immagine_contatto-invalid-feedback"></div>
@@ -84,9 +92,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="row m-3">
                         <div class="col d-flex justify-content-center">
-                            <button class="btn btn-success mt-2" type="submit">
-                                <i class="bi bi-person-check-fill" style="color:white;"></i> Salva Nuovo Contatto
-                            </button>
+
+                            <a href="./formEditContact.php?id=<?= $id ?>">
+                                <button class="btn btn-primary mt-2 mx-2" type="button">
+                                    <i class="bi bi-person-lines-fill" style="color:white;"></i> Modifica
+                                </button>
+                            </a>
+                            <a href="./deleteContact.php?id=<?= $id ?>">
+                                <button class="btn btn-danger mt-2 mx-2" type="button">
+                                    <i class="bi bi-person-x-fill" style="color:white;"></i> Elimina
+                                </button>
+                            </a>
+
                         </div>
                     </div>
 
