@@ -3,12 +3,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '\vendor\autoload.php';
 
 use User\Form\Form;
 
-$form = new Form($_SERVER["REQUEST_METHOD"]);
-
-$form->save_datas_on_post();
+$form = new Form();
+$form->saveContactInfo();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     header("Location: ../index.php");
 }
 
@@ -45,10 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid bg-light">
         <div class="row p-4 justify-content-center">
 
-            <div class="col col-lg-7 form-container">
+            <div class="col col-lg-7 form-container bg-white">
                 <form enctype="multipart/form-data" method="POST" action="<?php $_SERVER["PHP_SELF"] ?>">
 
                     <div class="row m-2">
@@ -85,7 +83,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="row m-3">
                         <div class="col d-flex justify-content-center">
-                            <button class="btn btn-primary mt-2" type="submit">Salva Nuovo Contatto</button>
+                            <button class="btn btn-primary mt-2" type="submit">
+                                <i class="bi bi-person-check-fill" style="color:white;"></i> Salva Nuovo Contatto
+                            </button>
                         </div>
                     </div>
 
