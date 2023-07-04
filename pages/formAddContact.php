@@ -45,9 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
     <div class="container-fluid bg-light wrapper">
-        <div class="row p-4 justify-content-center">
+        <div class="row p-4 justify-content-center form-container bg-white">
 
-            <div class="col col-lg-7 form-container bg-white">
+            <div class="col">
                 <form enctype="multipart/form-data" method="POST" action="<?php $_SERVER["PHP_SELF"] ?>">
 
                     <a href="../index.php">
