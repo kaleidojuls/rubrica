@@ -1,7 +1,7 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . '\common.php';
 
-use User\Form\Form;
+use User\Form;
 use User\DatabaseAbstraction\Helper;
 
 $id = $_GET['id'];

@@ -4,7 +4,7 @@
     "autoload": {
         "psr-4": {
             "User\\DatabaseAbstraction\\": "DatabaseAbstraction/src/",
-            "User\\Form\\": "src/"
+            "User\\": "src/"
         }
     },
     "authors": [

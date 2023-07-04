@@ -1,7 +1,7 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . '\common.php';
 
-use User\Form\Form;
+use User\Form;
 
 $form = new Form($database);
 

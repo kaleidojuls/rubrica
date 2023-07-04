@@ -1,9 +1,9 @@
 <?php
 
-namespace User\Form;
+namespace User;
 
 use User\DatabaseAbstraction\DatabaseContract;
-use User\Form\FormHelper;
+use User\FormHelper;
 
 class Form
 {
