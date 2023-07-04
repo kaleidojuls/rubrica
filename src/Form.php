@@ -23,10 +23,10 @@ class Form
             $numberExists = $this->checkNumberAlreadyExists($compiledInputs["numero"]);
 
             if ($numberExists) {
-                // echo "Il salvataggio non è andato a buon fine, 
-                //     esiste già un contatto con questo numero! 
-                //     <a href='../index.php'>Torna alla Rubrica</a>";
-                // die();
+                echo "Il salvataggio non è andato a buon fine, 
+                    esiste già un contatto con questo numero! 
+                    <a href='../index.php'>Torna alla Rubrica</a>";
+                die();
             } else {
                 $query = $this->getInsertQuery($compiledInputs);
             }
