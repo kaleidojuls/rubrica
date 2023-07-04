@@ -12,7 +12,7 @@ if (!$selectedContact) {
     die("Contact not found");
 }
 
-$form = new Form();
+$form = new Form($database);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $form->saveContactInfo("EDIT", $id);

@@ -3,7 +3,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '\common.php';
 
 use User\Form\Form;
 
-$form = new Form();
+$form = new Form($database);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $form->saveContactInfo("ADD");

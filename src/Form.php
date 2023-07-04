@@ -2,28 +2,40 @@
 
 namespace User\Form;
 
-use Exception;
-use User\Form\FormHelper;
-use User\DatabaseAbstraction\DatabaseFactory;
 use User\DatabaseAbstraction\DatabaseContract;
+use User\Form\FormHelper;
 
 class Form
 {
+    private DatabaseContract $database;
+
+    function __construct(DatabaseContract $database)
+    {
+        $this->database = $database;
+    }
+
     public function saveContactInfo(string $dbAction, int $contactId = null): void
     {
-        $database = DatabaseFactory::Create(DatabaseContract::TYPE_PDO);
-
         $compiledInputs = $this->getCompiledInputs();
         $query = "";
 
         if ($dbAction == "ADD") {
-            $query = $this->getInsertQuery($compiledInputs);
+            $numberExists = $this->checkNumberAlreadyExists($compiledInputs["numero"]);
+
+            if ($numberExists) {
+                // echo "Il salvataggio non è andato a buon fine, 
+                //     esiste già un contatto con questo numero! 
+                //     <a href='../index.php'>Torna alla Rubrica</a>";
+                // die();
+            } else {
+                $query = $this->getInsertQuery($compiledInputs);
+            }
 
         } else if ($dbAction == "EDIT") {
             $query = $this->getEditQuery($compiledInputs, $contactId);
         }
 
-        $database->setData($query, [array_values($compiledInputs)]);
+        $this->database->setData($query, [array_values($compiledInputs)]);
     }
 
     private function getCompiledInputs(): array
@@ -44,6 +56,15 @@ class Form
         }
 
         return array_key_exists($inputName, $_POST) ? $_POST[$inputName] : null;
+    }
+
+    private function checkNumberAlreadyExists($compiledNumber): bool|array
+    {
+        $result = $this->database->getData("SELECT numero FROM contacts WHERE EXISTS 
+        (SELECT numero FROM contacts WHERE numero = ?)", [$compiledNumber]);
+        $check = $result->fetch();
+
+        return $check;
     }
 
     private function getInsertQuery(array $compiledInputs): string
