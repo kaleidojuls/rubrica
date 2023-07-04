@@ -5,11 +5,11 @@ use User\Form\Form;
 use User\DatabaseAbstraction\Helper;
 
 $id = $_GET['id'];
-$result = $database->getData("SELECT * FROM contacts where id = ?", [$id]);
+$result = $database->getData("SELECT * FROM contatti where id = ?", [$id]);
 $selectedContact = $result->fetch();
 
 if (!$selectedContact) {
-    die("Contact not found");
+    die("Contatto non trovato");
 }
 
 $form = new Form($database);

@@ -22,7 +22,7 @@ require_once __DIR__ . '/common.php';
     <div class="container-fluid bg-light wrapper">
 
         <ul class="list-group contact-list-group">
-            <?php $result = $database->getData("SELECT * FROM contacts ORDER BY nome"); ?>
+            <?php $result = $database->getData("SELECT * FROM contatti ORDER BY nome"); ?>
             <?php while ($contact = $result->fetch()): ?>
 
             <li class="list-group-item d-flex row contact-list-item">
@@ -71,7 +71,7 @@ require_once __DIR__ . '/common.php';
             <div class="col d-flex justify-content-center">
                 <a href="./pages/formAddContact.php">
                     <button class="btn btn-success">
-                        <i class="bi bi-person-fill-add" style="color:white;"></i> aggiungi contatto
+                        <i class="bi bi-person-fill-add" style="color:white;"></i> Aggiungi Nuovo Contatto
                     </button>
                 </a>
             </div>

@@ -2,7 +2,7 @@ CREATE DATABASE rubrica;
 
 USE rubrica;
 
-create table contacts
+create table contatti
 (
     id 					int auto_increment              primary key,
     nome         			varchar(40)                 not null,
@@ -16,12 +16,12 @@ create table contacts
     created_at   timestamp default CURRENT_TIMESTAMP 	not null
 );
 
-ALTER TABLE contacts ADD FULLTEXT (nome);
-ALTER TABLE contacts ADD FULLTEXT (cognome);
-ALTER TABLE contacts ADD FULLTEXT (email);
-ALTER TABLE contacts ADD FULLTEXT (numero);
-ALTER TABLE contacts ADD FULLTEXT (nome,cognome,email,numero);
+ALTER TABLE contatti ADD FULLTEXT (nome);
+ALTER TABLE contatti ADD FULLTEXT (cognome);
+ALTER TABLE contatti ADD FULLTEXT (email);
+ALTER TABLE contatti ADD FULLTEXT (numero);
+ALTER TABLE contatti ADD FULLTEXT (nome,cognome,email,numero);
 
-ALTER TABLE contacts ADD CONSTRAINT UNIQUE(numero);
+ALTER TABLE contatti ADD CONSTRAINT UNIQUE(numero);
 
-ALTER TABLE contacts ADD active bool not null default (1);
+ALTER TABLE contatti ADD active bool not null default (1);

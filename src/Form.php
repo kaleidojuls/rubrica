@@ -60,8 +60,8 @@ class Form
 
     private function checkNumberAlreadyExists($compiledNumber): bool|array
     {
-        $result = $this->database->getData("SELECT numero FROM contacts WHERE EXISTS 
-        (SELECT numero FROM contacts WHERE numero = ?)", [$compiledNumber]);
+        $result = $this->database->getData("SELECT numero FROM contatti WHERE EXISTS 
+        (SELECT numero FROM contatti WHERE numero = ?)", [$compiledNumber]);
         $check = $result->fetch();
 
         return $check;
@@ -80,7 +80,7 @@ class Form
             }
         }
 
-        $query = "INSERT INTO contacts ($stringInputsNames) VALUES ($valuesPlaceholder)";
+        $query = "INSERT INTO contatti ($stringInputsNames) VALUES ($valuesPlaceholder)";
         return $query;
     }
 
@@ -97,7 +97,7 @@ class Form
             }
         }
 
-        $query = "UPDATE contacts SET $attributesPlaceholder 
+        $query = "UPDATE contatti SET $attributesPlaceholder 
             WHERE id = $contactId;";
 
         return $query;
