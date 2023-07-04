@@ -54,7 +54,7 @@ if (!$selectedContact) {
 
 <body>
 
-    <div class="container-fluid bg-light">
+    <div class="container-fluid bg-light wrapper">
         <div class="row p-4 justify-content-center">
 
             <div class="col col-lg-7 form-container bg-white">

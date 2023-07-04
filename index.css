@@ -1,9 +1,7 @@
 body {
     height: 100vh;
     width: 100vw;
-    padding: 0;
 }
-
 
 i {
     color: gray;
@@ -11,14 +9,20 @@ i {
 
 .wrapper {
     display: flex;
+    height: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    padding-top: 0.5rem;
 }
 
-.list-wrapper {
-    width: 90%;
+.contact-list-group {
+    display: flex;
+    max-height: 85%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 2px solid lightgray;
+    border-radius: 25px;
 }
 
 .action-icon {

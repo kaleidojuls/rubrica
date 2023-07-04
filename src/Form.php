@@ -2,9 +2,10 @@
 
 namespace User\Form;
 
+use Exception;
+use User\Form\FormHelper;
 use User\DatabaseAbstraction\DatabaseFactory;
 use User\DatabaseAbstraction\DatabaseContract;
-use User\Form\FormHelper;
 
 class Form
 {
@@ -23,7 +24,6 @@ class Form
         }
 
         $database->setData($query, [array_values($compiledInputs)]);
-
     }
 
     private function getCompiledInputs(): array

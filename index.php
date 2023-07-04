@@ -21,14 +21,14 @@ require_once __DIR__ . '/common.php';
 
     <div class="container-fluid bg-light wrapper">
 
-        <ul class="list-group">
-            <?php $result = $database->getData("SELECT * FROM contacts ORDER BY nome LIMIT 4"); ?>
+        <ul class="list-group contact-list-group">
+            <?php $result = $database->getData("SELECT * FROM contacts ORDER BY nome"); ?>
             <?php while ($contact = $result->fetch()): ?>
 
-            <li class="list-group-item row d-flex justify-content-between pl-3 pr-3">
+            <li class="list-group-item d-flex row contact-list-item">
 
-                <div class="col-2 d-flex align-items-center justify-content-center me-3">
-                    <i class="bi bi-person-circle" style="color: lightgrey; font-size: 4rem;"></i>
+                <div class="col-2 d-flex align-items-center justify-content-center">
+                    <i class="bi bi-person-circle ps-3 pe-2" style="color: lightgrey; font-size: 4rem;"></i>
                 </div>
 
                 <div class="col-8 d-flex flex-column justify-content-center">
@@ -51,7 +51,7 @@ require_once __DIR__ . '/common.php';
                     </div>
                 </div>
 
-                <div class="col-1 d-flex flex-column justify-content-center align-items-end">
+                <div class="col-2 d-flex flex-column justify-content-center align-items-end">
                     <a href="./pages/formEditContact.php?id=<?= $contact['id'] ?>">
                         <button class="action-icon btn btn-primary m-1">
                             <i class="bi bi-pencil" style="color:white;"></i>
