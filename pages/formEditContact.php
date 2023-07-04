@@ -41,14 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     import inputsConfig from "../src/inputsConfig.js";
     import CustomFormValidation from "../src/validation/CustomFormValidation.js"
 
-    inputsConfig.configImmagineContatto.value = "<?= Helper::AccessToValue($selectedContact, "immagine_contatto") ?>";
-    inputsConfig.configNome.value = "<?= Helper::AccessToValue($selectedContact, "nome") ?>";
-    inputsConfig.configCognome.value = "<?= Helper::AccessToValue($selectedContact, "cognome") ?>";
-    inputsConfig.configSocieta.value = "<?= Helper::AccessToValue($selectedContact, "societa") ?>";
-    inputsConfig.configQualifica.value = "<?= Helper::AccessToValue($selectedContact, "qualifica") ?>";
-    inputsConfig.configEmail.value = "<?= Helper::AccessToValue($selectedContact, "email") ?>";
-    inputsConfig.configNumero.value = "<?= Helper::AccessToValue($selectedContact, "numero") ?>";
-    inputsConfig.configCompleanno.value = "<?= Helper::AccessToValue($selectedContact, "compleanno") ?>";
+    <?php $contactCols = ["immagine_contatto", "nome", "cognome", "societa", "qualifica", "email", "numero", "compleanno"] ?>
+    <?php foreach ($contactCols as $colName): ?>
+
+    inputsConfig.<?= $colName ?>Config.value = "<?= Helper::AccessToValue($selectedContact, $colName) ?>";
+
+    <?php endforeach ?>
 
     for (const input in inputsConfig) {
         inputsConfig[input].printInput();
@@ -84,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div id="immagine_contatto-invalid-feedback"></div>
                     </div>
 
-                    <?php echo printCommonFormLayout(); ?>
+                    <?php echo printContactFormLayout(); ?>
 
                     <div class="row m-3">
                         <div class="col d-flex justify-content-center">

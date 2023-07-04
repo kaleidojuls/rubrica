@@ -6,7 +6,7 @@ use User\DatabaseAbstraction\DatabaseContract;
 
 $database = DatabaseFactory::Create(DatabaseContract::TYPE_PDO);
 
-function printCommonFormLayout(): string
+function printContactFormLayout(): string
 {
     return ('<div class="row m-3">
         <div class="col" id="col-nome"></div>

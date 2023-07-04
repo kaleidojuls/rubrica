@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div id="immagine_contatto-invalid-feedback"></div>
                     </div>
 
-                    <?php echo printCommonFormLayout(); ?>
+                    <?php echo printContactFormLayout(); ?>
 
                     <div class="row m-3">
                         <div class="col d-flex justify-content-center">
