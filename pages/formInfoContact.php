@@ -53,43 +53,44 @@ if (!$selectedContact) {
 <body>
 
     <div class="container-fluid bg-light wrapper">
-        <div class="row p-4 justify-content-center form-container bg-white">
 
-            <div class="col">
-                <form enctype="multipart/form-data" method="POST" action="<?php $_SERVER["PHP_SELF"] ?>">
+        <div class="p-4 justify-content-center form-container">
 
-                    <a href="../index.php">
-                        <i class="back-icon bi bi-arrow-left ms-3" style="font-size: 2rem; color: lightgray;"></i>
-                    </a>
+            <form enctype="multipart/form-data" method="POST" action="<?php $_SERVER["PHP_SELF"] ?>">
 
-                    <div class="row m-2">
-                        <div class="col d-flex justify-content-center">
-                            <div class="profile-pic"></div>
-                        </div>
+                <a href="../index.php">
+                    <i class="back-icon bi bi-arrow-left ms-3" style="font-size: 2rem; color: lightgray;"></i>
+                </a>
+
+                <div class="row m-2">
+                    <div class="col d-flex justify-content-center">
+                        <div class="profile-pic"></div>
                     </div>
+                </div>
 
-                    <?php echo printContactFormLayout(); ?>
+                <?php echo printContactFormLayout(); ?>
 
-                    <div class="row m-3">
-                        <div class="col d-flex justify-content-center">
+                <div class="row m-3">
+                    <div class="col d-flex justify-content-center">
 
-                            <a href="./formEditContact.php?id=<?= $id ?>">
-                                <button class="btn btn-primary mt-2 mx-2" type="button">
-                                    <i class="bi bi-person-lines-fill" style="color:white;"></i> Modifica
-                                </button>
-                            </a>
-                            <a href="./deleteContact.php?id=<?= $id ?>">
-                                <button class="btn btn-danger mt-2 mx-2" type="button">
-                                    <i class="bi bi-person-x-fill" style="color:white;"></i> Elimina
-                                </button>
-                            </a>
+                        <a href="./formEditContact.php?id=<?= $id ?>">
+                            <button class="btn btn-primary mt-2 mx-2" type="button">
+                                <i class="bi bi-person-lines-fill" style="color:white;"></i> Modifica
+                            </button>
+                        </a>
+                        <a href="./deleteContact.php?id=<?= $id ?>">
+                            <button class="btn btn-danger mt-2 mx-2" type="button">
+                                <i class="bi bi-person-x-fill" style="color:white;"></i> Elimina
+                            </button>
+                        </a>
 
-                        </div>
                     </div>
+                </div>
 
-                </form>
-            </div>
+            </form>
+
         </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

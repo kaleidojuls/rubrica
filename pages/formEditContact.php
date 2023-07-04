@@ -61,40 +61,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
     <div class="container-fluid bg-light wrapper">
-        <div class="row p-4 justify-content-center form-container bg-white">
 
-            <div class="col">
-                <form enctype="multipart/form-data" method="POST" action="<?php $_SERVER["PHP_SELF"] ?>">
+        <div class="p-4 justify-content-center form-container">
 
-                    <a href="../index.php">
-                        <i class="back-icon bi bi-arrow-left ms-3" style="font-size: 2rem; color: lightgray;"></i>
-                    </a>
+            <form enctype="multipart/form-data" method="POST" action="<?php $_SERVER["PHP_SELF"] ?>">
 
-                    <div class="row m-2">
-                        <div class="col d-flex justify-content-center">
-                            <div class="profile-pic">
-                                <label for="immagine_contatto" class="custom-input-button">
-                                    <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-                                    <div id="col-immagine_contatto"></div>
-                                </label>
-                            </div>
-                        </div>
-                        <div id="immagine_contatto-invalid-feedback"></div>
-                    </div>
+                <a href="../index.php">
+                    <i class="back-icon bi bi-arrow-left ms-3" style="font-size: 2rem; color: lightgray;"></i>
+                </a>
 
-                    <?php echo printContactFormLayout(); ?>
-
-                    <div class="row m-3">
-                        <div class="col d-flex justify-content-center">
-                            <button class="btn btn-success mt-2" type="submit">
-                                <i class="bi bi-person-check-fill" style="color:white;"></i> Salva Contatto
-                            </button>
+                <div class="row m-2">
+                    <div class="col d-flex justify-content-center">
+                        <div class="profile-pic">
+                            <label for="immagine_contatto" class="custom-input-button">
+                                <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                                <div id="col-immagine_contatto"></div>
+                            </label>
                         </div>
                     </div>
+                    <div id="immagine_contatto-invalid-feedback"></div>
+                </div>
 
-                </form>
-            </div>
+                <?php echo printContactFormLayout(); ?>
+
+                <div class="row m-3">
+                    <div class="col d-flex justify-content-center">
+                        <button class="btn btn-success mt-2" type="submit">
+                            <i class="bi bi-person-check-fill" style="color:white;"></i> Salva Contatto
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
         </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

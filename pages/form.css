@@ -22,11 +22,14 @@ input[type="file"] {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 0.5rem;
 }
 
 .form-container {
+    display: flex;
+    max-width: 660px;
     border: 3px solid lightgray;
+    background-color: white;
     border-radius: 10%;
     padding: 0.5rem;
 }
@@ -71,4 +74,8 @@ input[type="file"] {
     width: 100%;
     text-align: center;
     color: #dc3545;
+}
+
+.highlight {
+    border: 2px solid red;
 }
