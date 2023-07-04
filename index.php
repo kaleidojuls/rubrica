@@ -27,11 +27,11 @@ require_once __DIR__ . '/common.php';
 
             <li class="list-group-item d-flex row contact-list-item">
 
-                <div class="col-2 d-flex align-items-center justify-content-center">
+                <div class="col-2 d-flex align-items-center justify-content-center ps-4">
                     <i class="bi bi-person-circle ps-3 pe-2" style="color: lightgrey; font-size: 4rem;"></i>
                 </div>
 
-                <div class="col-8 d-flex flex-column justify-content-center">
+                <div class="col-8 d-flex flex-column justify-content-center ps-4">
                     <div class="fw-bold">
                         <?= $contact["nome"] ?>
                         <?= $contact["cognome"] ?>

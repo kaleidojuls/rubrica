@@ -45,8 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
     <div class="container-fluid bg-light wrapper">
-        <div class="row p-4 justify-content-center form-container bg-white">
 
+        <div class="row p-4 justify-content-center form-container bg-white">
             <div class="col">
                 <form enctype="multipart/form-data" method="POST" action="<?php $_SERVER["PHP_SELF"] ?>">
 
@@ -79,6 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </form>
             </div>
         </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
