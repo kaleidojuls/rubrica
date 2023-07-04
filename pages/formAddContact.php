@@ -6,7 +6,7 @@ use User\Form;
 $form = new Form($database);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $form->saveContactInfo("ADD");
+    $form->saveCompiledInfo("ADD");
     header("Location: ../index.php");
 }
 

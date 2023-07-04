@@ -2,6 +2,7 @@
 require_once $_SERVER["DOCUMENT_ROOT"] . '\common.php';
 
 use User\Form;
+use User\Contact;
 use User\DatabaseAbstraction\Helper;
 
 $id = $_GET['id'];
@@ -12,10 +13,12 @@ if (!$selectedContact) {
     die("Contatto non trovato");
 }
 
+$contact = new Contact();
+
 $form = new Form($database);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $form->saveContactInfo("EDIT", $id);
+    $form->saveCompiledInfo("EDIT", $id);
     header("Location: formInfoContact.php?id=$id");
 }
 
@@ -41,10 +44,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     import inputsConfig from "../src/inputsConfig.js";
     import CustomFormValidation from "../src/validation/CustomFormValidation.js"
 
-    <?php $contactCols = ["immagine_contatto", "nome", "cognome", "societa", "qualifica", "email", "numero", "compleanno"] ?>
-    <?php foreach ($contactCols as $colName): ?>
+    <?php $contactFields = $contact->getContactFields(); ?>
 
-    inputsConfig.<?= $colName ?>Config.value = "<?= Helper::AccessToValue($selectedContact, $colName) ?>";
+    <?php foreach ($contactFields as $fieldName): ?>
+
+    inputsConfig.<?= $fieldName ?>Config.value = "<?= Helper::AccessToValue($selectedContact, $fieldName) ?>";
 
     <?php endforeach ?>
 

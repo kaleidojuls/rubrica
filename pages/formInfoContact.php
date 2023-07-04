@@ -1,6 +1,7 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . '\common.php';
 
+use User\Contact;
 use User\DatabaseAbstraction\Helper;
 
 $id = $_GET['id'];
@@ -8,8 +9,10 @@ $result = $database->getData("SELECT * FROM contatti where id = ?", [$id]);
 $selectedContact = $result->fetch();
 
 if (!$selectedContact) {
-    die("Contact not found");
+    die("Contatto non trovato");
 }
+
+$contact = new Contact();
 
 ?>
 
@@ -33,10 +36,11 @@ if (!$selectedContact) {
     import inputsConfig from "../src/inputsConfig.js";
     import CustomFormValidation from "../src/validation/CustomFormValidation.js"
 
-    <?php $contactCols = ["immagine_contatto", "nome", "cognome", "societa", "qualifica", "email", "numero", "compleanno"] ?>
-    <?php foreach ($contactCols as $colName): ?>
+    <?php $contactFields = $contact->getContactFields(); ?>
 
-    inputsConfig.<?= $colName ?>Config.value = "<?= Helper::AccessToValue($selectedContact, $colName) ?>";
+    <?php foreach ($contactFields as $fieldName): ?>
+
+    inputsConfig.<?= $fieldName ?>Config.value = "<?= Helper::AccessToValue($selectedContact, $fieldName) ?>";
 
     <?php endforeach ?>
 
