@@ -13,9 +13,8 @@ if (!$selectedContact) {
     die("Contatto non trovato");
 }
 
-$contact = new Contact();
-
-$form = new Form($database);
+$contactAbstraction = new Contact();
+$form = new Form($contactAbstraction);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $form->saveCompiledInfo("EDIT", $id);
@@ -44,12 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     import inputsConfig from "../src/inputsConfig.js";
     import CustomFormValidation from "../src/validation/CustomFormValidation.js"
 
-    <?php $contactFields = $contact->getContactFields(); ?>
+    <?php $contactFields = $contactAbstraction->getTableFields(); ?>
 
     <?php foreach ($contactFields as $fieldName): ?>
-
     inputsConfig.<?= $fieldName ?>Config.value = "<?= Helper::AccessToValue($selectedContact, $fieldName) ?>";
-
     <?php endforeach ?>
 
     for (const input in inputsConfig) {

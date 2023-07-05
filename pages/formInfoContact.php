@@ -12,7 +12,7 @@ if (!$selectedContact) {
     die("Contatto non trovato");
 }
 
-$contact = new Contact();
+$contactAbstraction = new Contact();
 
 ?>
 
@@ -36,7 +36,7 @@ $contact = new Contact();
     import inputsConfig from "../src/inputsConfig.js";
     import CustomFormValidation from "../src/validation/CustomFormValidation.js"
 
-    <?php $contactFields = $contact->getContactFields(); ?>
+    <?php $contactFields = $contactAbstraction->getTableFields(); ?>
 
     <?php foreach ($contactFields as $fieldName): ?>
 

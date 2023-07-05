@@ -2,8 +2,11 @@
 require_once $_SERVER["DOCUMENT_ROOT"] . '\common.php';
 
 use User\Form;
+use User\Contact;
 
-$form = new Form($database);
+$contactAbstraction = new Contact();
+
+$form = new Form($contactAbstraction);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $form->saveCompiledInfo("ADD");

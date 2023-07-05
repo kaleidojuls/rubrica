@@ -2,7 +2,7 @@
 
 namespace User;
 
-class FormHelper
+class ImageHelper
 {
     public static function getEncodedImage(string $fileInputName): string|null
     {
