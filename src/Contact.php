@@ -88,22 +88,37 @@ class Contact
 
         $query = QueriesWriter::getEditQuery("contatti", $compiledFields, $contactId);
 
-        if (array_key_exists("immagine_contatto", $uploadedFiles)) {
-            $imgId = $this->getFieldsInfo("contatti", ["img_id"], ["id = '$contactId'"]);
+        $imgId = $this->getFieldsInfo("contatti", ["img_id"], ["id = '$contactId'"]);
 
-            $imageQuery = QueriesWriter::getEditQuery(
+        if (!array_key_exists("immagine_contatto", $uploadedFiles)) {
+
+            $this->database->DoWithTransaction([$query]);
+
+        } else if (array_key_exists("immagine_contatto", $uploadedFiles) && !$imgId[0]) {
+
+            $insertImageQuery = QueriesWriter::getInsertQuery(
+                "immagini_contatto",
+                $uploadedFiles["immagine_contatto"]
+            );
+
+            $this->database->DoWithTransaction([$query, $insertImageQuery]);
+            $this->addImgIdFK(
+                $uploadedFiles["immagine_contatto"]["tmp_name"],
+                $compiledFields["numero"]
+            );
+
+        } else if (array_key_exists("immagine_contatto", $uploadedFiles) && $imgId[0]) {
+
+            $editImageQuery = QueriesWriter::getEditQuery(
                 "immagini_contatto",
                 $uploadedFiles["immagine_contatto"],
                 $imgId[0]
             );
+
+            $this->database->DoWithTransaction([$query, $editImageQuery]);
+
         }
 
-        if (!$imageQuery) {
-            $this->database->DoWithTransaction([$query]);
-
-        } else {
-            $this->database->DoWithTransaction([$query, $imageQuery]);
-        }
     }
 
     public function deleteFields(int $contactId)
