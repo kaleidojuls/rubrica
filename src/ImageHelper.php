@@ -2,19 +2,15 @@
 
 namespace User;
 
-class ImageHelper
+class FileHelper
 {
-    public static function getEncodedImage(string $fileInputName): string|null
+    public static function getEncodedImage(array $imageFile): string|null
     {
-        if (array_key_exists($fileInputName, $_FILES)) {
-            $fileName = $_FILES[$fileInputName]["tmp_name"];
-            $fileType = $_FILES[$fileInputName]["type"];
-            $fileIsImage = str_contains($fileType, "image");
+        $fileName = $imageFile["tmp_name"];
+        $fileType = $imageFile["type"];
+        $fileIsImage = str_contains($fileType, "image");
 
-            return $fileIsImage ? self::base64EncodeImage($fileName, $fileType) : null;
-        }
-
-        return null;
+        return $fileIsImage ? self::base64EncodeImage($fileName, $fileType) : null;
     }
 
     public static function base64EncodeImage(string $fileName, string $fileType): string
