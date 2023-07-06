@@ -1,10 +1,11 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . '\vendor\autoload.php';
 
-use User\DatabaseAbstraction\DatabaseFactory;
-use User\DatabaseAbstraction\DatabaseContract;
+use User\Form;
+use User\Contact;
 
-$database = DatabaseFactory::Create(DatabaseContract::TYPE_PDO);
+$contactAbstraction = new Contact();
+$form = new Form($contactAbstraction);
 
 function printContactFormLayout(): string
 {
@@ -27,4 +28,14 @@ function printContactFormLayout(): string
         <label for="compleanno">Data di Nascita:</label>
         <div class="col" id="col-compleanno"></div>
         </div>');
+}
+
+function insertProfileImage(string $imgUrl = "default", string $imgType = "")
+{
+    if ($imgUrl === "default") {
+        return
+            '<i class="bi bi-person-circle ps-3 pe-2" style="color: lightgrey; font-size: 4rem;"></i>';
+    } else {
+        return "<img src=\"data:$imgType;base64,$imgUrl\" alt=\"img\">";
+    }
 }

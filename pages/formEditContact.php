@@ -1,23 +1,17 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . '\common.php';
 
-use User\Form;
-use User\Contact;
 use User\DatabaseAbstraction\Helper;
 
 $id = $_GET['id'];
-$result = $database->getData("SELECT * FROM contatti where id = ?", [$id]);
-$selectedContact = $result->fetch();
+$selectedContact = $contactAbstraction->getFieldsInfo("contatti", ["*"], ["id = '$id'"]);
 
 if (!$selectedContact) {
     die("Contatto non trovato");
 }
 
-$contactAbstraction = new Contact();
-$form = new Form($contactAbstraction);
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $form->saveCompiledInfo("EDIT", $id);
+    $form->manageInfo("EDIT", $id);
     header("Location: formInfoContact.php?id=$id");
 }
 

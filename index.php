@@ -15,6 +15,9 @@ require_once __DIR__ . '/common.php';
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="index.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -22,13 +25,17 @@ require_once __DIR__ . '/common.php';
     <div class="container-fluid bg-light wrapper">
 
         <ul class="list-group contact-list-group">
-            <?php $result = $database->getData("SELECT * FROM contatti ORDER BY nome"); ?>
-            <?php while ($contact = $result->fetch()): ?>
+            <?php $contacts = $contactAbstraction->getContactsInfo(); ?>
+            <?php foreach ($contacts as $contact): ?>
 
             <li class="list-group-item d-flex row contact-list-item">
 
                 <div class="col-2 d-flex align-items-center justify-content-center ps-4">
-                    <i class="bi bi-person-circle ps-3 pe-2" style="color: lightgrey; font-size: 4rem;"></i>
+
+                    <?php $contactImgId = $contact['img_id'] ?>
+                    <?php $contactImg = $contactAbstraction->getFieldsInfo("immagini_contatto", ["content", "type"], ["id = '$contactImgId'"]) ?>
+                    <?php echo $contactImg ? insertProfileImage($contactImg["content"], $contactImg["type"]) : insertProfileImage("default") ?>
+
                 </div>
 
                 <div class="col-8 d-flex flex-column justify-content-center ps-4">
@@ -64,7 +71,7 @@ require_once __DIR__ . '/common.php';
                     </a>
                 </div>
             </li>
-            <?php endwhile; ?>
+            <?php endforeach //endwhile; ?>
         </ul>
 
         <div class="row m-2">

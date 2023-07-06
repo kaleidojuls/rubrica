@@ -2,6 +2,7 @@
 
 namespace User;
 
+use User\QueriesWriter;
 use User\DatabaseAbstraction\DatabaseFactory;
 use User\DatabaseAbstraction\DatabaseContract;
 
@@ -12,6 +13,17 @@ class Contact
     public function __construct()
     {
         $this->database = DatabaseFactory::Create(DatabaseContract::TYPE_PDO);
+    }
+
+    public function getContactsInfo(): array
+    {
+        $result = $this->database->getData(
+            "SELECT id, nome, cognome, email, numero, img_id 
+            FROM contatti"
+        );
+        $contactsInfo = $result->fetchAll();
+
+        return $contactsInfo;
     }
 
     public function getTableFields(string $tableName = "contatti"): array
@@ -29,14 +41,31 @@ class Contact
         );
     }
 
+    public function getFieldsInfo(string $tableName, array $tableFields, array $coditions = []): array|bool
+    {
+        $tableFieldsString = implode(", ", $tableFields);
+
+        if (empty($coditions)) {
+            $query = "SELECT $tableFieldsString FROM $tableName";
+        } else {
+            $coditionsString = implode(" AND ", $coditions);
+            $query = "SELECT $tableFieldsString FROM $tableName WHERE $coditionsString";
+        }
+
+        $queryResult = $this->database->getData($query);
+        $result = $queryResult->fetch();
+
+        return $result;
+    }
+
     public function addCompiledFields(array $compiledFields, array $uploadedFiles): void
     {
         $this->checkNumberAlreadyExists($compiledFields["numero"]);
 
-        $query = $this->getInsertQuery('contatti', $compiledFields);
+        $query = QueriesWriter::getInsertQuery('contatti', $compiledFields);
 
         $imageQuery = array_key_exists("immagine_contatto", $uploadedFiles) ?
-            $this->getInsertQuery(
+            QueriesWriter::getInsertQuery(
                 "immagini_contatto", $uploadedFiles["immagine_contatto"]
             ) : "";
 
@@ -46,21 +75,10 @@ class Contact
         } else {
             $this->database->DoWithTransaction([$query, $imageQuery]);
 
-            $imageTmpName = $uploadedFiles["immagine_contatto"]["tmp_name"];
-            $resultImgId = $this->database->getData(
-                "SELECT id FROM immagini_contatto WHERE tmp_name = '$imageTmpName'"
+            $this->addImgIdFK(
+                $uploadedFiles["immagine_contatto"]["tmp_name"],
+                $compiledFields["numero"]
             );
-
-            $contactNumber = $compiledFields["numero"];
-            $resultContactId = $this->database->getData(
-                "SELECT id FROM contatti WHERE numero = '$contactNumber'"
-            );
-
-            $ImageId = $resultImgId->fetch();
-            $contactId = $resultContactId->fetch();
-
-            $addImageIdFK = $this->getEditQuery('contatti', ['img_id' => $ImageId[0]], $contactId[0]);
-            $this->database->DoWithTransaction([$addImageIdFK]);
         }
     }
 
@@ -68,30 +86,37 @@ class Contact
     {
         $this->checkNumberAlreadyExists($compiledFields["numero"], $contactId);
 
-        $query = $this->getEditQuery("contatti", $compiledFields, $contactId);
+        $query = QueriesWriter::getEditQuery("contatti", $compiledFields, $contactId);
 
-        $imageQuery = array_key_exists("immagine_contatto", $uploadedFiles) ?
-            $this->getEditQuery(
+        if (array_key_exists("immagine_contatto", $uploadedFiles)) {
+            $imgId = $this->getFieldsInfo("contatti", ["img_id"], ["id = '$contactId'"]);
+
+            $imageQuery = QueriesWriter::getEditQuery(
                 "immagini_contatto",
                 $uploadedFiles["immagine_contatto"],
-                $contactId
-            ) : "";
+                $imgId[0]
+            );
+        }
 
-        if (empty($imageQuery)) {
+        if (!$imageQuery) {
             $this->database->DoWithTransaction([$query]);
+
         } else {
             $this->database->DoWithTransaction([$query, $imageQuery]);
         }
     }
 
+    public function deleteFields(int $contactId)
+    {
+        $imgId = $this->getFieldsInfo("contatti", ["img_id"], ["id = '$contactId'"]);
+
+        $this->database->setData("DELETE FROM contatti WHERE id = ?", [[$contactId]]);
+        $this->database->setData("DELETE FROM immagini_contatto WHERE id = ?", [[$imgId[0]]]);
+    }
+
     private function checkNumberAlreadyExists($compiledNumber, bool|int $contactId = false): void
     {
-        $result = $this->database->getData(
-            "SELECT id FROM contatti WHERE numero = ?",
-            [$compiledNumber]
-        );
-
-        $alreadyExists = $result->fetch();
+        $alreadyExists = $this->getFieldsInfo("contatti", ["id"], ["numero = '$compiledNumber'"]);
 
         if (
             $contactId && $alreadyExists && $alreadyExists["id"] !== $contactId ||
@@ -104,27 +129,13 @@ class Contact
         }
     }
 
-    private function getInsertQuery(string $tableName, array $compiledFields): string
+    private function addImgIdFK(string $imageTmpName, string $contactNumber): void
     {
-        $stringFieldNames = implode(", ", array_keys($compiledFields));
-        $stringValues = implode("', '", array_values($compiledFields));
+        $imgId = $this->getFieldsInfo("immagini_contatto", ["id"], ["tmp_name = '$imageTmpName'"]);
+        $contactId = $this->getFieldsInfo("contatti", ["id"], ["numero = '$contactNumber'"]);
 
-        $query = "INSERT INTO $tableName ($stringFieldNames) VALUES ('$stringValues')";
-
-        return $query;
+        $addImageIdFK = QueriesWriter::getEditQuery('contatti', ['img_id' => $imgId[0]], $contactId[0]);
+        $this->database->DoWithTransaction([$addImageIdFK]);
     }
 
-    private function getEditQuery(string $tableName, array $compiledFields, int $contactId): string
-    {
-        foreach ($compiledFields as $fieldName => $fieldValue) {
-            $keyValueAssociations[] = "$fieldName = '$fieldValue'";
-        }
-
-        $fieldsPlaceholder = implode(", ", $keyValueAssociations);
-
-        $query = "UPDATE $tableName SET $fieldsPlaceholder 
-            WHERE id = $contactId;";
-
-        return $query;
-    }
 }

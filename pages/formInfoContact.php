@@ -1,18 +1,15 @@
 <?php
+
 require_once $_SERVER["DOCUMENT_ROOT"] . '\common.php';
 
-use User\Contact;
 use User\DatabaseAbstraction\Helper;
 
 $id = $_GET['id'];
-$result = $database->getData("SELECT * FROM contatti where id = ?", [$id]);
-$selectedContact = $result->fetch();
+$selectedContact = $contactAbstraction->getFieldsInfo("contatti", ["*"], ["id = '$id'"]);
 
 if (!$selectedContact) {
     die("Contatto non trovato");
 }
-
-$contactAbstraction = new Contact();
 
 ?>
 

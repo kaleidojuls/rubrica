@@ -2,6 +2,13 @@
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '\common.php';
 
-$database->setData("DELETE FROM contatti WHERE id = ?", [[$_GET["id"]]]);
+$id = $_GET['id'];
+$selectedContact = $contactAbstraction->getFieldsInfo("contatti", ["*"], ["id = '$id'"]);
+
+if (!$selectedContact) {
+    die("Contatto non trovato");
+}
+
+$form->manageInfo("CANCEL", $id);
 
 header("Location: ../index.php");

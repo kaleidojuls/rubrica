@@ -13,7 +13,7 @@ class Form
         $this->tableAbstractionObj = $tableAbstractionObj;
     }
 
-    public function saveCompiledInfo(string $action, int $id = null): void
+    public function manageInfo(string $action, int $id = null): void
     {
         $compiledInputs = $this->getCompiledInputs();
 
@@ -26,6 +26,9 @@ class Form
 
         } else if ($action == "EDIT") {
             $this->tableAbstractionObj->editCompiledFields($compiledInputs, $uploadedFiles, $id);
+
+        } else if ($action == "CANCEL") {
+            $this->tableAbstractionObj->deleteFields($id);
         }
     }
 
