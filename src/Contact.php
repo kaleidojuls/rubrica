@@ -137,10 +137,9 @@ class Contact
             $contactId && $alreadyExists && $alreadyExists["id"] !== $contactId ||
             !$contactId && $alreadyExists
         ) {
-            echo "Il salvataggio non è andato a buon fine, 
-                esiste già un contatto con questo numero! 
-                <a href='../index.php'>Torna alla Rubrica</a>";
-            die();
+            die("Il salvataggio non è andato a buon fine, 
+            esiste già un contatto con questo numero! 
+            <a href='../index.php'>Torna alla Rubrica</a>");
         }
     }
 
