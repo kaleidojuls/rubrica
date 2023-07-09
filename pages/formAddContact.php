@@ -52,15 +52,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </a>
 
                 <div class="row m-2">
-                    <div class="col d-flex justify-content-center">
-                        <div class="profile-pic">
-                            <label for="immagine_contatto" class="custom-input-button">
-                                <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-                                <div id="col-immagine_contatto"></div>
-                            </label>
+                    <div class="col d-flex flex-column align-items-center">
+
+                        <div class="profile-img-container img-positioning">
+                            <img class="img-profile" src="../src/assets/default-profile-img.png" alt="Icon by alfanz"
+                                title="Icon by alfanz">
                         </div>
+
+                        <label for="immagine_contatto" class="custom-input-button btn btn-secondary">
+                            <i class="bi bi-camera"></i>
+                            <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                            <div id="col-immagine_contatto"></div>
+                        </label>
+
+                        <div id="immagine_contatto-invalid-feedback"></div>
                     </div>
-                    <div id="immagine_contatto-invalid-feedback"></div>
                 </div>
 
                 <?php echo printContactFormLayout(); ?>

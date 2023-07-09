@@ -65,16 +65,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <i class="back-icon bi bi-arrow-left ms-3" style="font-size: 2rem; color: lightgray;"></i>
                 </a>
 
-                <div class="row m-2">
-                    <div class="col d-flex justify-content-center">
-                        <div class="profile-pic">
-                            <label for="immagine_contatto" class="custom-input-button">
-                                <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-                                <div id="col-immagine_contatto"></div>
-                            </label>
+                <div class="row mx-2">
+                    <div class="col d-flex flex-column justify-content-center align-items-center">
+
+                        <div class="profile-img-container img-positioning">
+                            <?php insertProfileImage($selectedContact, $contactAbstraction) ?>
                         </div>
+
+                        <label for="immagine_contatto"
+                            class="custom-input-button btn btn-secondary btn-block btn-outlined">
+                            <i class="bi bi-camera"></i>
+                            <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                            <div id="col-immagine_contatto"></div>
+                        </label>
+                        <div id="immagine_contatto-invalid-feedback"></div>
+
                     </div>
-                    <div id="immagine_contatto-invalid-feedback"></div>
                 </div>
 
                 <?php echo printContactFormLayout(); ?>

@@ -25,53 +25,60 @@ require_once __DIR__ . '/common.php';
     <div class="container-fluid bg-light wrapper">
 
         <ul class="list-group contact-list-group">
+
             <?php $contacts = $contactAbstraction->getContactsInfo(); ?>
+
             <?php foreach ($contacts as $contact): ?>
 
-            <li class="list-group-item d-flex row contact-list-item">
+            <li class="list-group-item contact-list-item justify-content-center">
+                <div class="row">
 
-                <div class="col-2 d-flex align-items-center justify-content-center ps-4">
+                    <div class="col-3 d-flex align-items-center justify-content-center p-0">
 
-                    <?php $contactImgId = $contact['img_id'] ?>
-                    <?php $contactImg = $contactAbstraction->getFieldsInfo("immagini_contatto", ["content", "type"], ["id = '$contactImgId'"]) ?>
-                    <?php echo $contactImg ? insertProfileImage($contactImg["content"], $contactImg["type"]) : insertProfileImage("default") ?>
+                        <div class="profile-img-container">
+                            <?php insertProfileImage($contact, $contactAbstraction, 'index') ?>
+                        </div>
 
-                </div>
+                    </div>
 
-                <div class="col-8 d-flex flex-column justify-content-center ps-4">
-                    <div class="fw-bold">
-                        <?= $contact["nome"] ?>
-                        <?= $contact["cognome"] ?>
-                        <a href="./pages/formInfoContact.php?id=<?= $contact['id'] ?>">
-                            <i class="bi bi-info-circle-fill"></i>
+                    <div class="col-7 w-70 d-flex flex-column justify-content-center">
+                        <div class="fw-bold">
+                            <?= $contact["nome"] ?>
+                            <?= $contact["cognome"] ?>
+                            <a href="./pages/formInfoContact.php?id=<?= $contact['id'] ?>">
+                                <i class="bi bi-info-circle-fill"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <div class="d-inline-block">
+                                <i class="bi bi-telephone-fill"></i>
+                                <?= $contact["numero"] ?>
+                            </div>
+                            <div class="d-inline-block">
+                                <i class="bi bi-envelope-fill"></i>
+                                <?= $contact["email"] ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-end">
+                        <a href="./pages/formEditContact.php?id=<?= $contact['id'] ?>">
+                            <button class="action-icon btn btn-primary m-1">
+                                <i class="bi bi-pencil" style="color:white;"></i>
+                            </button>
+                        </a>
+                        <a href="./pages/deleteContact.php?id=<?= $contact['id'] ?>">
+                            <button class="action-icon btn btn-danger m-1">
+                                <i class="bi bi-trash" style="color:white;"></i>
+                            </button>
                         </a>
                     </div>
-                    <div>
-                        <div class="d-inline-block me-3">
-                            <i class="bi bi-telephone-fill"></i>
-                            <?= $contact["numero"] ?>
-                        </div>
-                        <div class="d-inline-block">
-                            <i class="bi bi-envelope-fill"></i>
-                            <?= $contact["email"] ?>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-2 d-flex flex-column justify-content-center align-items-end">
-                    <a href="./pages/formEditContact.php?id=<?= $contact['id'] ?>">
-                        <button class="action-icon btn btn-primary m-1">
-                            <i class="bi bi-pencil" style="color:white;"></i>
-                        </button>
-                    </a>
-                    <a href="./pages/deleteContact.php?id=<?= $contact['id'] ?>">
-                        <button class="action-icon btn btn-danger m-1">
-                            <i class="bi bi-trash" style="color:white;"></i>
-                        </button>
-                    </a>
                 </div>
             </li>
+
             <?php endforeach //endwhile; ?>
+
         </ul>
 
         <div class="row m-2">

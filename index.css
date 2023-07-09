@@ -16,6 +16,21 @@ i {
     padding-top: 0.5rem;
 }
 
+.profile-img-container {
+    display: flex;
+    width: 5rem;
+    height: 5rem;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid lightgray;
+}
+
+.img-profile {
+    max-height: 5rem;
+}
+
 .contact-list-group {
     display: flex;
     max-height: 85%;
@@ -30,4 +45,9 @@ i {
     height: 30px;
     border-radius: 25px;
     padding: 0;
+    float: right;
+}
+
+.highlight {
+    border: 2px solid red;
 }

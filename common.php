@@ -30,12 +30,29 @@ function printContactFormLayout(): string
         </div>');
 }
 
-function insertProfileImage(string $imgUrl = "default", string $imgType = "")
+// function printProfileImage(string $imgUrl = "default", string $imgType = "", string $root = "."): void
+// {
+//     if ($imgUrl === "default") {
+//         echo "<img class=\"img-default\" src=\"$root/src/assets/default-profile-img.png\" alt=\"Icon by alfanz\"
+//         title=\"Icon by alfanz\">";
+//     } else {
+//         echo "<img class=\"img-profile\" src=\"data:$imgType;base64,$imgUrl\" alt=\"img\">";
+//     }
+// }
+
+function insertProfileImage(array $contact, Contact $contactAbstr, string $callPage = ""): void
 {
-    if ($imgUrl === "default") {
-        return
-            '<i class="bi bi-person-circle ps-3 pe-2" style="color: lightgrey; font-size: 4rem;"></i>';
-    } else {
-        return "<img src=\"data:$imgType;base64,$imgUrl\" alt=\"img\">";
-    }
+    $contactImgId = $contact['img_id'];
+    $root = $callPage === "index" ? "." : "../";
+
+    $contactImg = $contactAbstr->getFieldsInfo(
+        "immagini_contatto",
+        ["content", "type"],
+        ["id = '$contactImgId'"]
+    );
+
+    echo $contactImg ?
+        "<img class=\"img-profile\" src=\"data:" . $contactImg['type'] . ";base64," . $contactImg['content'] . "\" alt=\"img\">" :
+        "<img class=\"img-profile\" src=\"$root/src/assets/default-profile-img.png\" alt=\"Icon by alfanz\"
+        title=\"Icon by alfanz\">";
 }

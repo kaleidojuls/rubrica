@@ -65,7 +65,11 @@ if (!$selectedContact) {
 
                 <div class="row m-2">
                     <div class="col d-flex justify-content-center">
-                        <div class="profile-pic"></div>
+
+                        <div class="profile-img-container">
+                            <?php insertProfileImage($selectedContact, $contactAbstraction) ?>
+                        </div>
+
                     </div>
                 </div>
 
