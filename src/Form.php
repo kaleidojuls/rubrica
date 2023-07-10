@@ -50,14 +50,12 @@ class Form
 
     private function getUploadedFiles(): array
     {
-        foreach ($_FILES as $file) {
-            if ($file["error"] === 1 || $file["error"] === 2) {
+        $uploadedFiles = array_filter($_FILES, function ($fileInfo) {
+            if ($fileInfo["error"] === 1 || $fileInfo["error"] === 2) {
                 die("Il file caricato è troppo grande! <a href='../index.php'>Torna alla Rubrica</a>");
             }
-        }
-
-        $uploadedFiles = array_filter($_FILES, fn($fileInfo) =>
-            !empty($fileInfo["tmp_name"]));
+            return !empty($fileInfo["tmp_name"]);
+        });
 
         $simplifiedFiles = array_map(function ($fileInfo) {
             $fileBinary = fread(fopen($fileInfo["tmp_name"], "r"), filesize($fileInfo["tmp_name"]));

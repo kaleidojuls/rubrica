@@ -30,16 +30,6 @@ function printContactFormLayout(): string
         </div>');
 }
 
-// function printProfileImage(string $imgUrl = "default", string $imgType = "", string $root = "."): void
-// {
-//     if ($imgUrl === "default") {
-//         echo "<img class=\"img-default\" src=\"$root/src/assets/default-profile-img.png\" alt=\"Icon by alfanz\"
-//         title=\"Icon by alfanz\">";
-//     } else {
-//         echo "<img class=\"img-profile\" src=\"data:$imgType;base64,$imgUrl\" alt=\"img\">";
-//     }
-// }
-
 function insertProfileImage(array $contact, Contact $contactAbstr, string $callPage = ""): void
 {
     $contactImgId = $contact['img_id'];

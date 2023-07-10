@@ -77,7 +77,7 @@ require_once __DIR__ . '/common.php';
                 </div>
             </li>
 
-            <?php endforeach //endwhile; ?>
+            <?php endforeach ?>
 
         </ul>
 

@@ -1,5 +1,3 @@
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
-
 body {
     width: 100vw;
 }
@@ -10,7 +8,7 @@ i {
     margin: 0;
 }
 
-input[type="file"] {
+input[name="immagine_contatto"] {
     display: none;
 }
 
@@ -25,6 +23,7 @@ input[type="file"] {
 
 .form-container {
     display: flex;
+    flex-direction: column;
     max-width: 660px;
     border: 3px solid lightgray;
     background-color: white;
@@ -57,6 +56,7 @@ input[type="file"] {
 }
 
 .custom-input-button {
+    background-color: black;
     border-radius: 50%;
     position: relative;
     top: -3.2rem;
@@ -74,6 +74,7 @@ input[type="file"] {
 .custom-input-button:hover {
     transform: scale(1.08);
     opacity: 0.6;
+    background-color: black;
     border: 2px solid white;
 }
 
@@ -84,8 +85,4 @@ input[type="file"] {
     width: 100%;
     text-align: center;
     color: #dc3545;
-}
-
-.highlight {
-    border: 2px solid red;
 }
