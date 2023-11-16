@@ -1,5 +1,5 @@
 {
-    "name": "user/form-with-database",
+    "name": "user/rubrica",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -9,8 +9,7 @@
     },
     "authors": [
         {
-            "name": "Giulia s.",
-            "email": "g.schillaci@live.it"
+            "name": "Giulia s."
         }
     ],
     "require": {
